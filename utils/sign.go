@@ -67,6 +67,30 @@ func Verify(params map[string]string, signKey string) (bool, error) {
 	return signature == currentSignature, nil
 }
 
+func VerifyDepositCallback(params map[string]string, signKey string) bool {
+	signature := params["sign"]
+
+	keys := lo.Keys(params)
+
+	var sb strings.Builder
+	var value string
+	for _, k := range keys {
+		value = cast.ToString(params[k])
+		if k != "sign" && value != "" {
+			sb.WriteString(fmt.Sprintf("%s", url.QueryEscape(value)))
+		}
+	}
+
+	sb.WriteString(fmt.Sprintf("%s", signKey))
+	signStr := sb.String()
+	fmt.Printf("[rawString]%s\n", signStr)
+
+	hash := md5.Sum([]byte(signStr))
+	//fmt.Printf("sign: %s\n", signature)
+	//fmt.Printf("md5 sign: %s\n", hex.EncodeToString(hash[:]))
+	return signature == hex.EncodeToString(hash[:])
+}
+
 // 出金
 func SignWithdraw(params map[string]string, key string) (string, error) {
 	// 1. Validate key

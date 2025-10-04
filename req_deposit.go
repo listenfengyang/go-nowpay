@@ -13,7 +13,7 @@ import (
 func (cli *Client) Deposit(req NowPayDepositReq) (*NowPayDepositRsp, error) {
 
 	rawURL := cli.Params.DepositUrl
-	fmt.Println(rawURL)
+
 	var params map[string]string
 	mapstructure.Decode(req, &params)
 

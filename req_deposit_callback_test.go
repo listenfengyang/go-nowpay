@@ -47,9 +47,10 @@ func TestCallback(t *testing.T) {
 
 func GenCallbackRequestDemo() string {
 	return `{
-	"bill_no": "202506191258180899",
-	"bill_status": "2",
-	"sign": "79",
+	"amount": "10",
+	"amount_usdt": "1.385",
+	"sign": "8a85e73b50eb970fa8087b78c4d044de",
+	"bill_no": "2025100443562675411",
 	"sys_no": "505299"
 }`
 }

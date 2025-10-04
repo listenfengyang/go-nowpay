@@ -5,7 +5,6 @@ import (
 	"errors"
 	"github.com/listenfengyang/go-nowpay/utils"
 	"github.com/mitchellh/mapstructure"
-	"log"
 )
 
 // 充值-成功回调
@@ -13,12 +12,9 @@ func (cli *Client) DepositCallback(req NowPayDepositCallbackReq, processor func(
 	//验证签名
 	var params map[string]string
 	//mapstructure.Decode(req, &params)
-	params = map[string]string{"bill_no": req.BillNo}
-	flag, err := utils.Verify(params, cli.Params.BackKey)
-	if err != nil {
-		log.Printf("Sign verification error: %v", err)
-		return err
-	}
+	params = map[string]string{"bill_no": req.BillNo, "sign": req.Sign}
+
+	flag := utils.VerifyDepositCallback(params, cli.Params.BackKey)
 	if !flag {
 		//签名校验失败
 		reqJson, _ := json.Marshal(req)
@@ -38,11 +34,7 @@ func (cli *Client) DepositCanceledCallback(req NowPayDepositCallbackReq, process
 	delete(params, "amount")
 	delete(params, "amount_usdt")
 
-	flag, err := utils.Verify(params, cli.Params.BackKey)
-	if err != nil {
-		log.Printf("Sign verification error: %v", err)
-		return err
-	}
+	flag := utils.VerifyDepositCallback(params, cli.Params.BackKey)
 	if !flag {
 		//签名校验失败
 		reqJson, _ := json.Marshal(req)

@@ -22,7 +22,7 @@ func TestDeposit(t *testing.T) {
 
 func GenDepositRequestDemo() NowPayDepositReq {
 	return NowPayDepositReq{
-		OrderId:     url.QueryEscape("20251004435626754"),
+		OrderId:     url.QueryEscape("2025100443562675411"),
 		OrderAmount: url.QueryEscape("10"),
 		UserId:      url.QueryEscape("1"),
 		OrderIp:     url.QueryEscape("127.0.0.1"),
