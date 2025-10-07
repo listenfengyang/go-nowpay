@@ -44,10 +44,10 @@ type DepositData struct {
 
 // 入金回调
 type NowPayDepositCallbackReq struct {
-	BillNo string `json:"bill_no" mapstructure:"bill_no"` //唯一订单号，商户下单时传过来的order_id
-	//BillStatus string `json:"bill_status" mapstructure:"bill_status"` //订单状态：1=订单已取消 2=订单已激活
-	Sign  string `json:"sign" mapstructure:"sign"`
-	SysNo string `json:"sys_no" mapstructure:"sys_no"` //商户编号
+	BillNo     string `json:"bill_no" mapstructure:"bill_no"`         //唯一订单号，商户下单时传过来的order_id
+	BillStatus int    `json:"bill_status" mapstructure:"bill_status"` //订单状态：1=订单已取消 2=订单已激活
+	Sign       string `json:"sign" mapstructure:"sign"`
+	SysNo      string `json:"sys_no" mapstructure:"sys_no"` //商户编号
 	//成功参数
 	Amount     string `json:"amount" mapstructure:"amount"`           //订单金额
 	AmountUsdt string `json:"amount_usdt" mapstructure:"amount_usdt"` //订单USDT数量
@@ -75,7 +75,7 @@ type NowPayWithdrawRsp struct {
 // 出金回调
 type NowPayWithdrawCallbackReq struct {
 	BillNo     string `json:"bill_no" mapstructure:"bill_no"`         //唯一订单号，商户下单时传过来的order_id
-	BillStatus string `json:"bill_status" mapstructure:"bill_status"` //订单状态：1=订单已取消 2=订单已激活
+	BillStatus int    `json:"bill_status" mapstructure:"bill_status"` //订单状态：1=订单已取消 2=订单已激活
 	Sign       string `json:"sign" mapstructure:"sign"`
 	SysNo      string `json:"sys_no" mapstructure:"sys_no"` //商户编号
 	//成功参数

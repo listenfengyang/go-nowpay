@@ -37,7 +37,15 @@ func TestCallback(t *testing.T) {
 	}
 
 	//2. 处理请求
-	err = cli.DepositCallback(backReq, func(NowPayDepositCallbackReq) error { return nil })
+	//err = cli.DepositCallback(backReq, func(NowPayDepositCallbackReq) error { return nil })
+	//if err != nil {
+	//	cli.logger.Errorf("Error:%s", err.Error())
+	//	return
+	//}
+	//cli.logger.Infof("resp:%+v\n", backReq)
+
+	// 处理取消回调
+	err = cli.DepositCanceledCallback(backReq, func(NowPayDepositCallbackReq) error { return nil })
 	if err != nil {
 		cli.logger.Errorf("Error:%s", err.Error())
 		return
@@ -46,11 +54,6 @@ func TestCallback(t *testing.T) {
 }
 
 func GenCallbackRequestDemo() string {
-	return `{
-	"amount": "10",
-	"amount_usdt": "1.385",
-	"sign": "8a85e73b50eb970fa8087b78c4d044de",
-	"bill_no": "2025100443562675411",
-	"sys_no": "505299"
-}`
+	// bill_status 1=订单已取消 2=订单已激活
+	return `{"sign":"2c89857a90e2773f27583d954c91f40c","bill_no":"2025100443562675418","bill_status":1,"sys_no":"505299"}`
 }

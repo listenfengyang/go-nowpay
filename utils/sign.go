@@ -67,7 +67,8 @@ func Verify(params map[string]string, signKey string) (bool, error) {
 	return signature == currentSignature, nil
 }
 
-func VerifyDepositCallback(params map[string]string, signKey string) bool {
+// 入金&出金回调-成功-验签
+func VerifyCallback(params map[string]string, signKey string) bool {
 	signature := params["sign"]
 
 	keys := lo.Keys(params)
@@ -83,6 +84,33 @@ func VerifyDepositCallback(params map[string]string, signKey string) bool {
 
 	sb.WriteString(fmt.Sprintf("%s", signKey))
 	signStr := sb.String()
+	fmt.Printf("[rawString]%s\n", signStr)
+
+	hash := md5.Sum([]byte(signStr))
+	//fmt.Printf("sign: %s\n", signature)
+	//fmt.Printf("md5 sign: %s\n", hex.EncodeToString(hash[:]))
+	return signature == hex.EncodeToString(hash[:])
+}
+
+// 入金&出金回调-取消-验签
+func VerifyCanceledCallback(params map[string]interface{}, signKey string) bool {
+	signature := params["sign"]
+
+	keys := []string{"bill_no", "bill_status", "sys_no"}
+
+	var sb strings.Builder
+	var value string
+	for _, k := range keys {
+		value = cast.ToString(params[k])
+		if k != "sign" && value != "" {
+			sb.WriteString(fmt.Sprintf("%s=%s&", k, url.QueryEscape(value)))
+		}
+	}
+
+	signStr := sb.String()
+	signStr = strings.Trim(signStr, "&")
+	signStr += fmt.Sprintf("%s", signKey)
+
 	fmt.Printf("[rawString]%s\n", signStr)
 
 	hash := md5.Sum([]byte(signStr))

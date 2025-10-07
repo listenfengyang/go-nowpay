@@ -25,7 +25,7 @@ func GenWithdrawRequestDemo() NowPayWithdrawReq {
 		BankcardNo:  "353236326",
 		SerialNo:    "2025642422446",
 		BankAddress: "fgww",
-		Amount:      "11",
+		Amount:      "1",
 	}
 	return NowPayWithdrawReq{data}
 }

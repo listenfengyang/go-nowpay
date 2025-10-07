@@ -1,7 +1,6 @@
 package go_nowpay
 
 import (
-	"net/url"
 	"testing"
 	"time"
 )
@@ -22,11 +21,11 @@ func TestDeposit(t *testing.T) {
 
 func GenDepositRequestDemo() NowPayDepositReq {
 	return NowPayDepositReq{
-		OrderId:     url.QueryEscape("2025100443562675411"),
-		OrderAmount: url.QueryEscape("10"),
-		UserId:      url.QueryEscape("1"),
-		OrderIp:     url.QueryEscape("127.0.0.1"),
-		OrderTime:   url.QueryEscape(time.Now().Format(time.DateTime)),
-		PayUserName: url.QueryEscape("jane"),
+		OrderId:     "2025100443562675418",
+		OrderAmount: "10",
+		UserId:      "1",
+		OrderIp:     "127.0.0.1",
+		OrderTime:   time.Now().Format(time.DateTime),
+		PayUserName: "张三",
 	}
 }

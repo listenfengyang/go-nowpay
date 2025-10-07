@@ -14,7 +14,7 @@ func (cli *Client) DepositCallback(req NowPayDepositCallbackReq, processor func(
 	//mapstructure.Decode(req, &params)
 	params = map[string]string{"bill_no": req.BillNo, "sign": req.Sign}
 
-	flag := utils.VerifyDepositCallback(params, cli.Params.BackKey)
+	flag := utils.VerifyCallback(params, cli.Params.BackKey)
 	if !flag {
 		//签名校验失败
 		reqJson, _ := json.Marshal(req)
@@ -29,12 +29,12 @@ func (cli *Client) DepositCallback(req NowPayDepositCallbackReq, processor func(
 // 充值-取消回调
 func (cli *Client) DepositCanceledCallback(req NowPayDepositCallbackReq, processor func(NowPayDepositCallbackReq) error) error {
 	//验证签名
-	var params map[string]string
+	var params map[string]interface{}
 	mapstructure.Decode(req, &params)
 	delete(params, "amount")
 	delete(params, "amount_usdt")
 
-	flag := utils.VerifyDepositCallback(params, cli.Params.BackKey)
+	flag := utils.VerifyCanceledCallback(params, cli.Params.BackKey)
 	if !flag {
 		//签名校验失败
 		reqJson, _ := json.Marshal(req)

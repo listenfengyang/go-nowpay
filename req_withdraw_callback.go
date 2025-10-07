@@ -12,14 +12,10 @@ import (
 func (cli *Client) WithdrawCallback(req NowPayWithdrawCallbackReq, processor func(req NowPayWithdrawCallbackReq) error) error {
 	//验证签名
 	var params map[string]string
-	params = map[string]string{"bill_no": req.BillNo}
+	params = map[string]string{"bill_no": req.BillNo, "sign": req.Sign}
 
 	// Verify signature
-	flag, err := utils.Verify(params, cli.Params.BackKey)
-	if err != nil {
-		log.Printf("Signature verification error: %v", err)
-		return err
-	}
+	flag := utils.VerifyCallback(params, cli.Params.BackKey)
 	if !flag {
 		//签名校验失败
 		reqJson, _ := json.Marshal(req)
