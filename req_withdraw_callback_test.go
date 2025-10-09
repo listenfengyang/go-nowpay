@@ -20,7 +20,15 @@ func TestWithdrawCallback(t *testing.T) {
 	}
 
 	//2. 处理请求
-	err = cli.WithdrawCallback(backReq, func(NowPayWithdrawCallbackReq) error { return nil })
+	//err = cli.WithdrawCallback(backReq, func(NowPayWithdrawCallbackReq) error { return nil })
+	//if err != nil {
+	//	cli.logger.Errorf("Error:%s", err.Error())
+	//	return
+	//}
+	//cli.logger.Infof("resp:%+v\n", backReq)
+
+	//2. 处理请求
+	err = cli.WithdrawCanceledCallback(backReq, func(NowPayWithdrawCallbackReq) error { return nil })
 	if err != nil {
 		cli.logger.Errorf("Error:%s", err.Error())
 		return
@@ -29,5 +37,6 @@ func TestWithdrawCallback(t *testing.T) {
 }
 
 func GenWdCallbackRequestDemo() string {
-	return `{"amount":"1","sign":"45fc45fb8b1115f5ce339e15328bed56","bill_no":"2025100417244604954","sys_no":"505299"}`
+	//return `{"amount":"1","sign":"45fc45fb8b1115f5ce339e15328bed56","bill_no":"2025100417244604954","sys_no":"505299"}`
+	return `{"bill_no":"202510090656090207","bill_status":1,"sign":"f6f7f6d0540167f7241c56df4bb318ee","sys_no":"505299","amount":""}`
 }
